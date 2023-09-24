@@ -1,0 +1,25 @@
+{
+  "name": "fertirice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akbarsigit/FertiRice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akbarsigit/FertiRice/issues"
+  },
+  "homepage": "https://github.com/akbarsigit/FertiRice#readme"
+}
