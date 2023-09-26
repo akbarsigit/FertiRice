@@ -1,15 +1,45 @@
+const dotenv = require("dotenv");
 const express = require("express");
+const morgan = require("morgan");
+const nutrisiController = require("./controllers/nutrisiController");
+const rekomendasiController = require("./controllers/rekomendasiController");
+const evalController = require("./controllers/evalController");
+const cors = require("cors");
 
-const hostname = "127.0.0.1";
-const port = 3000;
+dotenv.config({ path: "./config.env" });
 
-const app = express()
+const app = express();
 
-app.get('/', (req, res)=>{
-    res.status(200).send('Hello Word')
-})
+app.use(cors());
+app.use(morgan("dev"));
+app.use(express.json());
+app.use((req, res, next) => {
+  req.requestTime = new Date().toUTCString();
+  next();
+});
 
+// const router = express.Router();
 
-app.listen(port, ()=>{
-    console.log(`App running on Port ${port}...`)
-})
+app.param("tanggal", (req, res, next, val) => {
+  console.log(`tanggal : ${val}`);
+  next();
+});
+
+app.route("/").get();
+
+app
+  .route("/nutrisi")
+  .get(nutrisiController.getAllNutrisi)
+  .post(nutrisiController.postNutrisi);
+app.route("/nutrisi/:tanggal").get(nutrisiController.getNutrisi);
+
+app.route("/rekomendasi").get(rekomendasiController.getAllRekomendasi);
+app.route("/rekomendasi/:tanggal").get(rekomendasiController.getRekomendasi);
+
+app.route("/eval").get(evalController.getAllEval).post(evalController.postEval);
+app.route("/eval/:tanggal").get(evalController.getEval);
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`App running on Port ${port}...`);
+});
