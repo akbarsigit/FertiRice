@@ -1,11 +1,11 @@
 const pg = require("pg");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
 
 const config = {
   host: "fertirice.postgres.database.azure.com",
-  // Do not hard code your username and password.
-  // Consider using Node environment variables.
   user: "akbar@fertirice",
-  password: "Capstone1",
+  password: process.env.DB_PASS,
   database: "fertirice_db",
   port: 5432,
   ssl: true,

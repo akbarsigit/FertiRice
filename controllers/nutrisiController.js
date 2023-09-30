@@ -14,11 +14,7 @@ exports.getAllNutrisi = async (req, res) => {
         data: rows, // Store the rows in the 'rows' property of the response
       },
     });
-
-    // If you want to log the rows as well
-    // rows.forEach((row) => {
-    //   console.log(`Read: ${JSON.stringify(row)}`);
-    // });
+    
   } catch (err) {
     console.log(err);
 
@@ -34,10 +30,48 @@ exports.postNutrisi = async (req, res) => {
   try {
     const { n, p, k, petak } = req.body;
 
-    const query = `INSERT INTO nutrisi (tanggal, n, p, k, petak) VALUES ($1, $2, $3, $4, $5)`;
+    // METODE 1
+    // ======== Rekomendasi K ============
+    let rekomendasi_n = 30;
+    let rekomendasi_p = 30;
+    let rekomendasi_k = 30;
+
+    // rendah
+    if (k < 20) {
+      rekomendasi_k = 100;
+    }
+    // sedang & tinggi
+    else if (k >= 20) {
+      rekomendasi_k = 50;
+    }
+    // ======== Rekomendasi P ============
+    // rendah
+    if (p < 20) {
+      rekomendasi_p = 100;
+    }
+    //sedang
+    else if (p >= 20 && p <= 40) {
+      rekomendasi_p = 75;
+    }
+    // tinggi
+    else if (p > 40) {
+      rekomendasi_p = 50;
+    }
+
+    const rekomen_query = `INSERT INTO rekomendasi (timestamp, rekomen_n, rekomen_p, rekomen_k, petak) VALUES ($1, $2, $3, $4, $5)`;
+    const rekomen_val = [
+      req.requestTime,
+      rekomendasi_n,
+      rekomendasi_p,
+      rekomendasi_k,
+      petak,
+    ];
+
+    const query = `INSERT INTO nutrisi (timestamp, n, p, k, petak) VALUES ($1, $2, $3, $4, $5)`;
     const values = [req.requestTime, n, p, k, petak];
 
     await client.query(query, values);
+    await client.query(rekomen_query, rekomen_val);
 
     console.log("Inserted successfully!");
     console.log("Closed client connection");
