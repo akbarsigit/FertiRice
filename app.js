@@ -17,12 +17,13 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use((req, res, next) => {
   const currentDate = new Date();
-  const hh = String(currentDate.getUTCHours()).padStart(2, "0");
-  const min = String(currentDate.getUTCMinutes()).padStart(2, "0");
-  const sec = String(currentDate.getUTCSeconds()).padStart(2, "0"); // Get the seconds component
-  const dd = String(currentDate.getUTCDate()).padStart(2, "0");
-  const mm = String(currentDate.getUTCMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1
-  const yyyy = currentDate.getUTCFullYear();
+  currentDate.setUTCHours(currentDate.getUTCHours() + 7); // Adjust for GMT+7
+  const hh = String(currentDate.getHours()).padStart(2, "0");
+  const min = String(currentDate.getMinutes()).padStart(2, "0");
+  const sec = String(currentDate.getSeconds()).padStart(2, "0");
+  const dd = String(currentDate.getDate()).padStart(2, "0");
+  const mm = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1
+  const yyyy = currentDate.getFullYear();
 
   req.requestTime = `${hh}:${min}:${sec}-${dd}-${mm}-${yyyy}`;
   next();
