@@ -14,7 +14,8 @@
     "nodemon": "^3.0.1"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "start:node": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/akbarsigit/FertiRice/issues"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "homepage": "https://github.com/akbarsigit/FertiRice#readme"
 }
