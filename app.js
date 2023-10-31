@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   const mm = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1
   const yyyy = currentDate.getFullYear();
 
-  req.requestTime = `${hh}:${min}:${sec}-${dd}-${mm}-${yyyy}`;
+  req.requestTime = `${hh}:${min}:${sec}.${dd}-${mm}-${yyyy}`;
   next();
 });
 
@@ -37,6 +37,8 @@ app.param("tanggal", (req, res, next, val) => {
 });
 
 app.route("/api/").get(homeController.getHome);
+
+app.route("/api/npk/latest/:petak").get(homeController.getLatestNPK);
 
 app
   .route("/api/nutrisi")
@@ -57,7 +59,7 @@ app
 
 app.route("/api/eval/:tanggal").get(evalController.getEval);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`App running on Port ${port}...`);
 });

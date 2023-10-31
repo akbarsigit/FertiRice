@@ -28,7 +28,7 @@ exports.getAllNutrisi = async (req, res) => {
 
 exports.postNutrisi = async (req, res) => {
   try {
-    const { n, p, k, petak } = req.body;
+    const { n, p, k, hst, petak } = req.body;
 
     // METODE 1
     // ======== Rekomendasi K ============
@@ -67,8 +67,8 @@ exports.postNutrisi = async (req, res) => {
       petak,
     ];
 
-    const query = `INSERT INTO nutrisi (timestamp, n, p, k, petak) VALUES ($1, $2, $3, $4, $5)`;
-    const values = [req.requestTime, n, p, k, petak];
+    const query = `INSERT INTO nutrisi (timestamp, n, p, k, hst, petak) VALUES ($1, $2, $3, $4, $5, $6)`;
+    const values = [req.requestTime, n, p, k, hst, petak];
 
     await client.query(query, values);
     await client.query(rekomen_query, rekomen_val);

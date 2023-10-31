@@ -31,7 +31,7 @@ client.connect((err) => {
 // function queryDatabase() {
 //   const query = `
 //       DROP TABLE IF EXISTS nutrisi;
-//       CREATE TABLE nutrisi (timestamp VARCHAR(50) PRIMARY KEY, n INTEGER, p INTEGER, k INTEGER, petak INTEGER);
+//       CREATE TABLE nutrisi (timestamp VARCHAR(50) PRIMARY KEY, n DECIMAL, p DECIMAL, k DECIMAL, hst INTEGER, petak INTEGER);
 //   `;
 
 //   client
@@ -51,7 +51,7 @@ client.connect((err) => {
 // function queryDatabase() {
 //   const query = `
 //       DROP TABLE IF EXISTS rekomendasi;
-//       CREATE TABLE rekomendasi (timestamp VARCHAR(50) PRIMARY KEY, rekomen_n INTEGER, rekomen_p INTEGER, rekomen_k INTEGER, petak INTEGER);
+//       CREATE TABLE rekomendasi (timestamp VARCHAR(50) PRIMARY KEY, rekomen_n DECIMAL, rekomen_p DECIMAL, rekomen_k DECIMAL, petak INTEGER);
 //   `;
 
 //   client
@@ -71,7 +71,7 @@ client.connect((err) => {
 // function queryDatabase() {
 //   const query = `
 //       DROP TABLE IF EXISTS eval;
-//       CREATE TABLE eval (timestamp VARCHAR(50) PRIMARY KEY, warna INTEGER, tinggi DECIMAL, petak INTEGER);
+//       CREATE TABLE eval (timestamp VARCHAR(50) PRIMARY KEY, warna INTEGER, tinggi DECIMAL, lebar DECIMAL, hst INTEGER, petak INTEGER);
 //   `;
 
 //   client

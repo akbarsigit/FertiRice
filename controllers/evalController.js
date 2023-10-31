@@ -26,21 +26,22 @@ exports.getAllEval = async (req, res) => {
 
 exports.postEval = async (req, res) => {
   try {
-    const { warna, tinggi, petak } = req.body;
+    const { warna, tinggi, lebar, hst, petak } = req.body;
 
-    const query = `INSERT INTO eval (timestamp, warna, tinggi, petak) VALUES ($1, $2, $3, $4)`;
-    const values = [req.requestTime, warna, tinggi, petak];
+    console.log(hst);
+
+    const query = `INSERT INTO eval (timestamp, warna, tinggi, lebar, hst, petak) VALUES ($1, $2, $3, $4, $5, $6)`;
+    const values = [req.requestTime, warna, tinggi, lebar, hst, petak];
 
     await client.query(query, values);
 
-    console.log("Inserted successfully!");
-    console.log("Closed client connection");
+    // console.log("Inserted successfully!");
+    // console.log("Closed client connection");
 
     res.status(200).json({
       status: "success",
       data: {
         tanggal: req.requestTime,
-        query: query,
       },
     });
   } catch (err) {
