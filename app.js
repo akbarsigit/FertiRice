@@ -12,7 +12,14 @@ dotenv.config({ path: "./config.env" });
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+var corsOptions = {
+  origin: "*",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use((req, res, next) => {
