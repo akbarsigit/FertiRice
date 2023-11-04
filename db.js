@@ -2,9 +2,18 @@ const pg = require("pg");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
 
+// const config = {
+//   host: "fertirice.postgres.database.azure.com",
+//   user: "akbar@fertirice",
+//   password: process.env.DB_PASS,
+//   database: "fertirice_db",
+//   port: 5432,
+//   ssl: true,
+// };
+
 const config = {
-  host: "fertirice.postgres.database.azure.com",
-  user: "akbar@fertirice",
+  host: "capstone-new.postgres.database.azure.com",
+  user: "capstone@capstone-new",
   password: process.env.DB_PASS,
   database: "fertirice_db",
   port: 5432,
@@ -45,7 +54,7 @@ client.connect((err) => {
 //       console.log("Finished execution, exiting now");
 //       process.exit();
 //     });
-// }
+// };
 
 // ==================== CREATE REKOMENDASI TABLE ===========
 // function queryDatabase() {
