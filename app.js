@@ -46,6 +46,8 @@ app.param("tanggal", (req, res, next, val) => {
 app.route("/api/").get(homeController.getHome);
 
 app.route("/api/npk/latest/:petak").get(homeController.getLatestNPK);
+app.route("/api/npk/:petak").get(homeController.getPetakNPK);
+
 
 app
   .route("/api/nutrisi")
