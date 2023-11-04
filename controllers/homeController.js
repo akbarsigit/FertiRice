@@ -64,7 +64,7 @@ exports.getPetakNPK = async (req, res) => {
   try {
     const petak = req.params.petak;
     const query = `
-      SELECT timestamp, n, p, k FROM nutrisi WHERE petak = $1 ORDER BY timestamp DESC
+      SELECT timestamp, n, p, k FROM nutrisi WHERE petak = $1 ORDER BY timestamp ASC
     `;
 
     // console.log(petak);
