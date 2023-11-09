@@ -6,6 +6,9 @@ const rekomendasiController = require("./controllers/rekomendasiController");
 const evalController = require("./controllers/evalController");
 const cors = require("cors");
 const homeController = require("./controllers/homeController");
+
+const fertilizationController = require("./controllers/fertilization");
+
 // const pool = require("./db");
 
 dotenv.config({ path: "./config.env" });
@@ -48,7 +51,6 @@ app.route("/api/").get(homeController.getHome);
 app.route("/api/npk/latest/:petak").get(homeController.getLatestNPK);
 app.route("/api/npk/:petak").get(homeController.getPetakNPK);
 
-
 app
   .route("/api/nutrisi")
   .get(nutrisiController.getAllNutrisi)
@@ -67,6 +69,11 @@ app
   .post(evalController.postEval);
 
 app.route("/api/eval/:tanggal").get(evalController.getEval);
+
+app.route("/api/fertilization").get(fertilizationController.getAllferti);
+app
+  .route("/api/fertilization/:tanggal")
+  .get(fertilizationController.getfertili);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

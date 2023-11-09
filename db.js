@@ -96,4 +96,24 @@ client.connect((err) => {
 //     });
 // }
 
+// ==================== CREATE fertilization TABLE ===========
+// function queryDatabase() {
+//   const query = `
+//       DROP TABLE IF EXISTS fertilization;
+//       CREATE TABLE fertilization (timestamp VARCHAR(50) PRIMARY KEY, dosisN DECIMAL, dosisP DECIMAL, dosisK DECIMAL, hst INTEGER, petak INTEGER);
+//   `;
+
+//   client
+//     .query(query)
+//     .then(() => {
+//       console.log("Table created successfully!");
+//       client.end(console.log("Closed client connection"));
+//     })
+//     .catch((err) => console.log(err))
+//     .then(() => {
+//       console.log("Finished execution, exiting now");
+//       process.exit();
+//     });
+// }
+
 module.exports = client;
