@@ -46,31 +46,38 @@ app.param("tanggal", (req, res, next, val) => {
   next();
 });
 
+// Main Dashboard Route
 app.route("/api/").get(homeController.getHome);
 
+// Stats Route
 app.route("/api/npk/latest/:petak").get(homeController.getLatestNPK);
 app.route("/api/npk/:petak").get(homeController.getPetakNPK);
 
+// Nutrisi Route
 app
   .route("/api/nutrisi")
   .get(nutrisiController.getAllNutrisi)
   .post(nutrisiController.postNutrisi);
 app.route("/api/nutrisi/:tanggal").get(nutrisiController.getNutrisi);
 
+// Rekomendasi Route
 app.route("/api/rekomendasi").get(rekomendasiController.getAllRekomendasi);
-
 app
   .route("/api/rekomendasi/:tanggal")
   .get(rekomendasiController.getRekomendasi);
 
+// Eval Route
 app
   .route("/api/eval")
   .get(evalController.getAllEval)
   .post(evalController.postEval);
-
 app.route("/api/eval/:tanggal").get(evalController.getEval);
 
-app.route("/api/fertilization").get(fertilizationController.getAllferti);
+// Fertilization Route
+app
+  .route("/api/fertilization")
+  .get(fertilizationController.getAllferti)
+  .post(fertilizationController.postFerti);
 app
   .route("/api/fertilization/:tanggal")
   .get(fertilizationController.getfertili);

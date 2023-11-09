@@ -56,3 +56,36 @@ exports.getfertili = async (req, res) => {
     });
   }
 };
+
+exports.postFerti = async (req, res) => {
+  try {
+    const { dosisN, dosisP, dosisK, hst, petak } = req.body;
+
+    const ferti_query = `INSERT INTO fertilization (timestamp, dosisN, dosisP, dosisK, hst, petak) VALUES ($1, $2, $3, $4, $5)`;
+    const ferti_val = [req.requestTime, dosisN, dosisP, dosisK, hst, petak];
+
+    await client.query(query, values);
+    await client.query(ferti_query, ferti_val);
+
+    console.log("Inserted successfully!");
+    console.log("Closed client connection");
+    // If you want to exit the process, you can uncomment the line below
+    // process.exit();
+
+    // const dataNutrisi = Object.assign({ tanggal: req.requestTime }, req.body);
+    res.status(200).json({
+      status: "success",
+      data: {
+        tanggal: req.requestTime,
+        query: query,
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+    // Handle the error and send an error response if needed
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while inserting data.",
+    });
+  }
+};
