@@ -65,9 +65,6 @@ exports.postFerti = async (req, res) => {
     const ferti_val = [req.requestTime, dosisN, dosisP, dosisK, hst, petak];
     await client.query(ferti_query, ferti_val);
 
-    console.log("Inserted successfully!");
-    console.log("Closed client connection");
-
     // const dataNutrisi = Object.assign({ tanggal: req.requestTime }, req.body);
     res.status(200).json({
       status: "success",
@@ -81,7 +78,7 @@ exports.postFerti = async (req, res) => {
     // Handle the error and send an error response if needed
     res.status(500).json({
       status: "error",
-      message: "An error occurred while inserting data.",
+      message: err.message,
     });
   }
 };
