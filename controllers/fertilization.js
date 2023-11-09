@@ -70,7 +70,7 @@ exports.postFerti = async (req, res) => {
       status: "success",
       data: {
         tanggal: req.requestTime,
-        query: query,
+        query: ferti_query,
       },
     });
   } catch (err) {
