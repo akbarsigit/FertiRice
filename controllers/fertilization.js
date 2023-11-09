@@ -63,8 +63,6 @@ exports.postFerti = async (req, res) => {
 
     const ferti_query = `INSERT INTO fertilization (timestamp, dosisN, dosisP, dosisK, hst, petak) VALUES ($1, $2, $3, $4, $5, $6)`;
     const ferti_val = [req.requestTime, dosisN, dosisP, dosisK, hst, petak];
-
-    await client.query(query, values);
     await client.query(ferti_query, ferti_val);
 
     console.log("Inserted successfully!");
