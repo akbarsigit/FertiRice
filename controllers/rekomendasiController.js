@@ -15,10 +15,6 @@ exports.getAllRekomendasi = async (req, res) => {
       },
     });
 
-    // If you want to log the rows as well
-    // rows.forEach((row) => {
-    //   console.log(`Read: ${JSON.stringify(row)}`);
-    // });
   } catch (err) {
     console.log(err);
 
@@ -43,6 +39,30 @@ exports.getRekomendasi = async (req, res) => {
       status: "success",
       data: {
         tanggal: tanggal,
+        data: rows,
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+
+    // Handle the error and send an error response if needed
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching data.",
+    });
+  }
+};
+
+exports.getRekomendasPetak = async (req, res) => {
+  try {
+    const query = "SELECT timestamp, dosagerecomendationn, dosagerecomendationp, dosagerecomendationk, petak FROM dosagerecomendation as D Where timestamp = (SELECT max (timestamp) FROM dosagerecomendation as D2 where D.petak = D2.petak)";
+
+    const result = await client.query(query);
+    const rows = result.rows;
+
+    res.status(200).json({
+      status: "success",
+      data: {
         data: rows,
       },
     });

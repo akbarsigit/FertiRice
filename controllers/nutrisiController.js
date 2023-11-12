@@ -125,11 +125,11 @@ exports.postNutrisi = async (req, res) => {
       status: "success",
     });
   } catch (err) {
-    console.error(err.message);
+    // console.error(err.message);
     // Handle the error and send an error response if needed
     res.status(500).json({
       status: "error",
-      message: "An error occurred while inserting data.",
+      message: err.message,
     });
   }
 };
