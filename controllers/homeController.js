@@ -4,7 +4,7 @@ exports.getHome = async (req, res) => {
   try {
     const query = `
       SELECT r.*, n.*
-      FROM rekomendasi r
+      FROM dosagerecomendation r
       INNER JOIN nutrisi n ON r.timestamp = n.timestamp;
     `;
 

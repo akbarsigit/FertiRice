@@ -138,7 +138,7 @@ client.connect((err) => {
 
 // function queryDatabase() {
 //   const query = `
-//       INSERT INTO dosageRecomendation (timestamp, dosageRecomendationN, dosageRecomendationP, dosageRecomendationK, petak) VALUES ('06:45:54.05-11-2023', 330, 330, 330, 1)
+//       INSERT INTO dosageRecomendation (timestamp, dosageRecomendationN, dosageRecomendationP, dosageRecomendationK, petak) VALUES ('06:45:54.05-11-2023', 330, 330, 330, 5)
 //   `;
 
 //   client

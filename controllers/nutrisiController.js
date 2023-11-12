@@ -29,7 +29,6 @@ exports.getAllNutrisi = async (req, res) => {
 exports.postNutrisi = async (req, res) => {
   try {
     const { n, p, k, hst, petak } = req.body;
-
     // METODE 1
     
     // let rekomendasi_n = 30;
@@ -77,7 +76,14 @@ exports.postNutrisi = async (req, res) => {
     const param = [petak];
     const dosageResponse = await client.query(dosage, param);
     const dosageData = dosageResponse.rows;
-    const { dosageRecomendationn: dosageRecN, dosageRecomendationp: dosageRecP, dosageRecomendationk: dosageRecK} = dosageData[0];
+    
+    let { dosagerecomendationn: dosageRecN, dosagerecomendationp: dosageRecP, dosagerecomendationk: dosageRecK} = dosageData[0];
+    
+
+    dosageRecN = parseFloat(dosageRecN)
+    dosageRecP = parseFloat(dosageRecP)
+    dosageRecK = parseFloat(dosageRecK)
+
 
     // const prevNPK = "SELECT timestamp, n, p, k, hst, petak FROM nutrisi as n Where timestamp = (SELECT max (timestamp) FROM nutrisi as n2 where n.petak = n2.petak);"
     const prevNPK = "SELECT n, p, k, petak FROM nutrisi where petak = $1 order by timestamp DESC LIMIT 1;"
@@ -86,7 +92,11 @@ exports.postNutrisi = async (req, res) => {
     const prevNPKData = prevNPKResponse.rows;
 
     // const { nDb, pDb, kDb, petakDb } = prevNPKData[0]
-    const { n: nDb, p: pDb, k: kDb, petak: petakDb } = prevNPKData[0];
+    let { n: nDb, p: pDb, k: kDb, petak: petakDb } = prevNPKData[0];
+
+    nDb = parseFloat(nDb)
+    pDb = parseFloat(pDb)
+    kDb = parseFloat(kDb)
 
     // high
     if ((nDb >= 24 && n >= 24) || (pDb >= 24 && p >= 24) || (kDb >= 24 && k >= 24) || (nDb <= 8 && n >= 24) || (pDb <= 8 && p >= 24) || (kDb <= 8 && k >= 24)){
@@ -125,7 +135,7 @@ exports.postNutrisi = async (req, res) => {
       status: "success",
     });
   } catch (err) {
-    // console.error(err.message);
+    console.error(err.message);
     // Handle the error and send an error response if needed
     res.status(500).json({
       status: "error",
