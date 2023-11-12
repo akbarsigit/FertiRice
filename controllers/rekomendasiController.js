@@ -2,7 +2,7 @@ const client = require("../db");
 
 exports.getAllRekomendasi = async (req, res) => {
   try {
-    const query = "SELECT * FROM rekomendasi;";
+    const query = "SELECT * FROM dosagerecomendation;";
     const result = await client.query(query);
     const rows = result.rows;
 
@@ -33,7 +33,7 @@ exports.getAllRekomendasi = async (req, res) => {
 exports.getRekomendasi = async (req, res) => {
   try {
     const tanggal = req.params.tanggal;
-    const query = "SELECT * FROM rekomendasi WHERE timestamp = $1";
+    const query = "SELECT * FROM dosagerecomendation WHERE timestamp = $1";
     const values = [tanggal];
 
     const result = await client.query(query, values);
