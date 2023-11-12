@@ -62,6 +62,8 @@ app.route("/api/nutrisi/:tanggal").get(nutrisiController.getNutrisi);
 
 // Rekomendasi Route
 app.route("/api/rekomendasi").get(rekomendasiController.getAllRekomendasi);
+app.route("/api/rekomendasi/latest").get(rekomendasiController.getRekomendasPetak);
+
 app
   .route("/api/rekomendasi/:tanggal")
   .get(rekomendasiController.getRekomendasi);
