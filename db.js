@@ -116,4 +116,43 @@ client.connect((err) => {
 //     });
 // }
 
+// ==================== CREATE dosageRecomendation TABLE ===========
+// function queryDatabase() {
+//   const query = `
+//       DROP TABLE IF EXISTS dosageRecomendation;
+//       CREATE TABLE dosageRecomendation (timestamp VARCHAR(50) PRIMARY KEY, dosageRecomendationN DECIMAL, dosageRecomendationP DECIMAL, dosageRecomendationK DECIMAL, petak INTEGER);
+//   `;
+
+//   client
+//     .query(query)
+//     .then(() => {
+//       console.log("Table created successfully!");
+//       client.end(console.log("Closed client connection"));
+//     })
+//     .catch((err) => console.log(err))
+//     .then(() => {
+//       console.log("Finished execution, exiting now");
+//       process.exit();
+//     });
+// }
+
+// function queryDatabase() {
+//   const query = `
+//       INSERT INTO dosageRecomendation (timestamp, dosageRecomendationN, dosageRecomendationP, dosageRecomendationK, petak) VALUES ('06:39:54.05-11-2023', 167, 330, 500, 4)
+//   `;
+
+//   client
+//     .query(query)
+//     .then(() => {
+//       console.log("Table created successfully!");
+//       client.end(console.log("Closed client connection"));
+//     })
+//     .catch((err) => console.log(err))
+//     .then(() => {
+//       console.log("Finished execution, exiting now");
+//       process.exit();
+//     });
+// }
+
+
 module.exports = client;

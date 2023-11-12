@@ -14,8 +14,7 @@
     "nodemon": "^3.0.1"
   },
   "scripts": {
-    "start": "node app.js",
-    "start:node": "nodemon app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
