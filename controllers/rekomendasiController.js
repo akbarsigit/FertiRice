@@ -2,7 +2,9 @@ const client = require("../db");
 
 exports.getAllRekomendasi = async (req, res) => {
   try {
-    const query = "SELECT * FROM dosagerecomendation;";
+    // const query = "SELECT * FROM dosagerecomendation;";
+    const query = "SELECT json_agg(json_build_object('timestamp', timestamp,'dosagerecomendationn', dosagerecomendationn,'dosagerecomendationp', dosagerecomendationp, 'dosagerecomendationk', dosagerecomendationk,'petak', petak)) AS petak_data FROM dosagerecomendation GROUP BY petak ORDER BY petak;";
+
     const result = await client.query(query);
     const rows = result.rows;
 
