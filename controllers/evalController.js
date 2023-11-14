@@ -2,7 +2,7 @@ const client = require("../db");
 
 exports.getAllEval = async (req, res) => {
   try {
-    const query = "SELECT * FROM eval;";
+    const query = "SELECT * FROM eval ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 10;";
     const result = await client.query(query);
     const rows = result.rows;
 
