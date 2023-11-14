@@ -73,7 +73,9 @@ app
   .route("/api/eval")
   .get(evalController.getAllEval)
   .post(evalController.postEval);
+app.route("/api/eval/stat-avg").get(evalController.statEvalAvg);
 app.route("/api/eval/:tanggal").get(evalController.getEval);
+
 
 // Fertilization Route
 app

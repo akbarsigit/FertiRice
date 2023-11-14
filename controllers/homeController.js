@@ -33,7 +33,7 @@ exports.getLatestNPK = async (req, res) => {
   try {
     const petak = req.params.petak;
     const query = `
-      SELECT n, p, k FROM nutrisi WHERE petak = $1 ORDER BY timestamp DESC LIMIT 1
+      SELECT n, p, k FROM nutrisi WHERE petak = $1 ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 1
     `;
 
     // console.log(petak);
@@ -64,7 +64,7 @@ exports.getPetakNPK = async (req, res) => {
   try {
     const petak = req.params.petak;
     const query = `
-      SELECT timestamp, n, p, k FROM nutrisi WHERE petak = $1 ORDER BY timestamp ASC
+      SELECT timestamp, n, p, k FROM nutrisi WHERE petak = $1 ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') ASC
     `;
 
     // console.log(petak);

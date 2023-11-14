@@ -72,7 +72,7 @@ exports.postNutrisi = async (req, res) => {
 
 
     // METODE 2
-    const dosage = "SELECT dosageRecomendationN, dosageRecomendationP, dosageRecomendationK FROM dosageRecomendation where petak = $1 order by timestamp DESC LIMIT 1;";
+    const dosage = "SELECT dosageRecomendationN, dosageRecomendationP, dosageRecomendationK FROM dosageRecomendation where petak = $1 ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 1;";
     const param = [petak];
     const dosageResponse = await client.query(dosage, param);
     const dosageData = dosageResponse.rows;
@@ -86,7 +86,7 @@ exports.postNutrisi = async (req, res) => {
 
 
     // const prevNPK = "SELECT timestamp, n, p, k, hst, petak FROM nutrisi as n Where timestamp = (SELECT max (timestamp) FROM nutrisi as n2 where n.petak = n2.petak);"
-    const prevNPK = "SELECT n, p, k, petak FROM nutrisi where petak = $1 order by timestamp DESC LIMIT 1;"
+    const prevNPK = "SELECT n, p, k, petak FROM nutrisi where petak = $1 ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 1;"
 
     const prevNPKResponse = await client.query(prevNPK, param);
     const prevNPKData = prevNPKResponse.rows;
@@ -99,20 +99,42 @@ exports.postNutrisi = async (req, res) => {
     kDb = parseFloat(kDb)
 
     // high
-    if ((nDb >= 24 && n >= 24) || (pDb >= 24 && p >= 24) || (kDb >= 24 && k >= 24) || (nDb <= 8 && n >= 24) || (pDb <= 8 && p >= 24) || (kDb <= 8 && k >= 24)){
-      dosageRecN = dosageRecN - 50
-      dosageRecP = dosageRecP - 50
-      dosageRecK = dosageRecK - 50
-    }
-    // low
-    else if ((nDb <= 8 && n <= 8) || (pDb <= 8 && p <= 8) || (kDb <= 8 && k <= 8) || (nDb >= 24 && n <= 8) || (pDb >= 24 && p <= 8) || (kDb >= 24 && k <= 8)){
-      dosageRecN = dosageRecN + 50
-      dosageRecP = dosageRecP + 50
-      dosageRecK = dosageRecK + 50
-    }
-    
-    // console.log(prevNPKData[0])
+    // if ((nDb >= 24 && n >= 24) || (pDb >= 24 && p >= 24) || (kDb >= 24 && k >= 24) || (nDb <= 8 && n >= 24) || (pDb <= 8 && p >= 24) || (kDb <= 8 && k >= 24)){
+    //   dosageRecN = dosageRecN - 50
+    //   dosageRecP = dosageRecP - 50
+    //   dosageRecK = dosageRecK - 50
+    // }
+    // // low
+    // else if ((nDb <= 8 && n <= 8) || (pDb <= 8 && p <= 8) || (kDb <= 8 && k <= 8) || (nDb >= 24 && n <= 8) || (pDb >= 24 && p <= 8) || (kDb >= 24 && k <= 8)){
+    //   dosageRecN = dosageRecN + 50
+    //   dosageRecP = dosageRecP + 50
+    //   dosageRecK = dosageRecK + 50
+    // }
 
+    const isHigh = val => val >= 24;
+    const isLow = val => val <= 8;
+
+    if (isLow(nDb) || isHigh(nDb)) {
+      if(isLow(n)){
+        dosageRecN += 50
+      }else if (isHigh(n)){
+        dosageRecN -= 50
+      }
+    }
+    if (isLow(pDb) || isHigh(pDb)) {
+      if(isLow(p)){
+        dosageRecP += 50
+      }else if (isHigh(p)){
+        dosageRecP -= 50
+      }
+    }
+    if (isLow(kDb) || isHigh(kDb)) {
+      if(isLow(k)){
+        dosageRecK += 50
+      }else if (isHigh(k)){
+        dosageRecK -= 50
+      }
+    }
 
     const rekomen_query = `INSERT INTO dosagerecomendation (timestamp, dosagerecomendationn, dosagerecomendationp, dosagerecomendationk, petak) VALUES ($1, $2, $3, $4, $5)`;
     const rekomen_val = [

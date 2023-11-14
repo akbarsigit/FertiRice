@@ -80,3 +80,34 @@ exports.getEval = async (req, res) => {
     });
   }
 };
+
+
+exports.statEvalAvg = async (req, res) => {
+  try {
+    // const tanggal = req.params.tanggal;
+    // const query = "SELECT * FROM eval as E Where timestamp = (SELECT max (timestamp) FROM eval as E2 where E.petak = E2.petak)";
+    const query = "SELECT petak, AVG(tinggi) as tinggi_avg,AVG(lebar) as lebar_avg FROM eval GROUP BY petak ORDER BY petak;";
+    // const query = "WITH NumberedRows AS (SELECT petak, tinggi, lebar, ROW_NUMBER() OVER (PARTITION BY petak ORDER BY (SELECT NULL)) AS rn FROM eval) SELECT petak, AVG(tinggi) AS average_tinggi, AVG(lebar) AS average_lebar FROM NumberedRows GROUP BY petak, (rn - 1) / 3 ORDER BY petak;";
+
+    // const query = "SELECT * FROM eval WHERE timestamp = $1";
+    // const values = [tanggal];
+
+    const result = await client.query(query);
+    const rows = result.rows;
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: rows,
+      },
+    });
+  } catch (err) {
+    console.error(err.message);
+
+    // Handle the error and send an error response if needed
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching data.",
+    });
+  }
+};

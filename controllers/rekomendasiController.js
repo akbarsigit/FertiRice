@@ -55,7 +55,8 @@ exports.getRekomendasi = async (req, res) => {
 
 exports.getRekomendasPetak = async (req, res) => {
   try {
-    const query = "SELECT timestamp, dosagerecomendationn, dosagerecomendationp, dosagerecomendationk, petak FROM dosagerecomendation as D Where timestamp = (SELECT max (timestamp) FROM dosagerecomendation as D2 where D.petak = D2.petak)";
+    // const query = "SELECT timestamp, dosagerecomendationn, dosagerecomendationp, dosagerecomendationk, petak FROM dosagerecomendation as D Where timestamp = (SELECT max (timestamp) FROM dosagerecomendation as D2 where D.petak = D2.petak)";
+    const query = "SELECT timestamp, dosagerecomendationn, dosagerecomendationp, dosagerecomendationk, petak FROM (SELECT timestamp, dosagerecomendationn, dosagerecomendationp, dosagerecomendationk, petak, ROW_NUMBER() OVER (PARTITION BY petak ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC) AS row_num FROM dosagerecomendation) AS D WHERE row_num = 1; ";
 
     const result = await client.query(query);
     const rows = result.rows;
