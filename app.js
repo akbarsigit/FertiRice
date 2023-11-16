@@ -63,7 +63,6 @@ app.route("/api/nutrisi/:tanggal").get(nutrisiController.getNutrisi);
 // Rekomendasi Route
 app.route("/api/rekomendasi").get(rekomendasiController.getAllRekomendasi);
 app.route("/api/rekomendasi/latest").get(rekomendasiController.getRekomendasPetak);
-
 app
   .route("/api/rekomendasi/:tanggal")
   .get(rekomendasiController.getRekomendasi);
@@ -74,6 +73,7 @@ app
   .get(evalController.getAllEval)
   .post(evalController.postEval);
 app.route("/api/eval/stat-avg").get(evalController.statEvalAvg);
+app.route("/api/eval/chart").get(evalController.getChartEval);
 app.route("/api/eval/:tanggal").get(evalController.getEval);
 
 

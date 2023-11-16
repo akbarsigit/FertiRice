@@ -24,6 +24,32 @@ exports.getAllEval = async (req, res) => {
   }
 };
 
+exports.getChartEval = async (req, res) => {
+  try {
+    // const query = "SELECT * FROM eval ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 10;";
+    const query = "SELECT json_agg(json_build_object('timestamp', timestamp, 'tinggi', tinggi, 'lebar', lebar, 'petak', petak)) AS petak_data FROM eval GROUP BY petak ORDER BY petak;";
+
+    const result = await client.query(query);
+    const rows = result.rows;
+
+    // Send the rows as a JSON response
+    res.status(200).json({
+      status: "success",
+      data: {
+        requestedAt: req.requestTime,
+        data: rows, // Store the rows in the 'rows' property of the response
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    // Handle the error and send an error response if needed
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching data.",
+    });
+  }
+}
+
 exports.postEval = async (req, res) => {
   try {
     const { warna, tinggi, lebar, hst, petak } = req.body;
