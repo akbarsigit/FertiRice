@@ -5,7 +5,9 @@ exports.getHome = async (req, res) => {
     const query = `
       SELECT r.*, n.*
       FROM dosagerecomendation r
-      INNER JOIN nutrisi n ON r.timestamp = n.timestamp;
+      INNER JOIN nutrisi n ON r.timestamp = n.timestamp
+      ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 20
+      ;
     `;
 
     const result = await client.query(query);
