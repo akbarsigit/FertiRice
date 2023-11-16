@@ -3,9 +3,7 @@ const client = require("../db");
 exports.getHome = async (req, res) => {
   try {
     const query = `
-      SELECT * FROM nutrisi ORDER BY TO_TIMESTAMP(n.timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 20
-      ;
-    `;
+      SELECT * FROM nutrisi ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 20;`;
 
     const result = await client.query(query);
     const rows = result.rows;
@@ -18,12 +16,11 @@ exports.getHome = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err.message);
 
     // Handle the error and send an error response if needed
     res.status(500).json({
       status: "error",
-      message: "An error occurred while fetching joined data.",
+      message: err.message,
     });
   }
 };
