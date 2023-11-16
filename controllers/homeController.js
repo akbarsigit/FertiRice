@@ -3,10 +3,7 @@ const client = require("../db");
 exports.getHome = async (req, res) => {
   try {
     const query = `
-      SELECT r.*, n.*
-      FROM dosagerecomendation r
-      INNER JOIN nutrisi n ON r.timestamp = n.timestamp
-      ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 20
+      SELECT * FROM nutrisi ORDER BY TO_TIMESTAMP(n.timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 20
       ;
     `;
 
