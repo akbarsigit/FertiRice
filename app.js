@@ -74,6 +74,7 @@ app
   .post(evalController.postEval);
 app.route("/api/eval/stat-avg").get(evalController.statEvalAvg);
 app.route("/api/eval/chart").get(evalController.getChartEval);
+app.route("/api/eval/chartDiff").get(evalController.getEvalvsPetak);
 app.route("/api/eval/:tanggal").get(evalController.getEval);
 
 

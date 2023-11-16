@@ -50,6 +50,33 @@ exports.getChartEval = async (req, res) => {
   }
 }
 
+exports.getEvalvsPetak = async (req, res) => {
+  try {
+    const query = "SELECT json_agg(json_build_object('timestamp', timestamp, petak, tinggi)) FROM eval;";
+    // const query = "SELECT json_agg(json_build_object('timestamp', timestamp, 'tinggi', tinggi, 'lebar', lebar, 'petak', petak)) AS petak_data FROM eval GROUP BY petak ORDER BY petak;";
+
+
+    const result = await client.query(query);
+    const rows = result.rows;
+
+    // Send the rows as a JSON response
+    res.status(200).json({
+      status: "success",
+      data: {
+        requestedAt: req.requestTime,
+        data: rows, // Store the rows in the 'rows' property of the response
+      },
+    });
+  } catch (err) {
+    console.log(err.message);
+    // Handle the error and send an error response if needed
+    res.status(500).json({
+      status: "error",
+      message: err.message
+    });
+  }
+}
+
 exports.postEval = async (req, res) => {
   try {
     const { warna, tinggi, lebar, hst, petak } = req.body;
