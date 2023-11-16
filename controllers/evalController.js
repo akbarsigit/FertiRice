@@ -50,6 +50,31 @@ exports.getChartEval = async (req, res) => {
   }
 }
 
+exports.getAggChartEval = async (req, res) => {
+  try {
+    // const query = "SELECT * FROM eval ORDER BY TO_TIMESTAMP(timestamp, 'HH24:MI:SS.DD-MM-YYYY') DESC LIMIT 10;";
+    const query = "SELECT json_agg(json_build_object('petak', petak, 'avg_tinggi', avg_tinggi, 'avg_lebar', avg_lebar) ORDER BY petak, avg_tinggi) AS final_result FROM (SELECT petak, AVG(tinggi) AS avg_tinggi, AVG(lebar) AS avg_lebar FROM (SELECT tinggi, lebar, petak, (ROW_NUMBER() OVER (ORDER BY timestamp) - 1) / 15 AS group_number FROM eval ORDER BY timestamp) AS numbered_data GROUP BY petak, group_number) AS aggregated_data;";
+    const result = await client.query(query);
+    const rows = result.rows;
+
+    // Send the rows as a JSON response
+    res.status(200).json({
+      status: "success",
+      data: {
+        requestedAt: req.requestTime,
+        data: rows, // Store the rows in the 'rows' property of the response
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    // Handle the error and send an error response if needed
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching data.",
+    });
+  }
+}
+
 exports.getEvalvsPetak = async (req, res) => {
   try {
     const query = "SELECT json_agg(json_build_object('timestamp', timestamp, petak, tinggi)) AS petak_data FROM eval;";
